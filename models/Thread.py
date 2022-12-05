@@ -3,12 +3,15 @@ from models.package import Package
 
 
 class Thread:
-    def __init__(self, transfer_speed: int = 1024):
+    def __init__(self,no: int, transfer_speed: int = 1024):
+        self.name = f'#{no}'
+        self.no = no
         self.transfer_speed: int = transfer_speed
-        self.current_file_transferred: Package = None
+        self.current_file_transferred: (Package, Customer) = None
         self.auctioned_customers = []
+        self.history_of_loads: list[(Package, Customer)] = [] #(Package(1024, 0), Customer(0)), (Package(20000, 1), Customer(0))
 
-    def auction(self, customer_list: list[Customer]) -> (Customer, Package):
+    def auction(self, customer_list: list[Customer]) -> (Package, Customer):
         c, p = None, None
         return c, p
 
@@ -18,7 +21,39 @@ class Thread:
                 customer.is_taking_part_in_auction = not customer.is_taking_part_in_auction
                 self.auctioned_customers.append(customer)
 
-    def return_customers(self):
+    def get_customers(self):
         for customer in self.auctioned_customers:
             customer.is_taking_part_in_auction = not customer.is_taking_part_in_auction
         self.auctioned_customers = []
+
+    def get_thread_history_as_string(self):
+        if not self.history_of_loads:
+            return "No files \nhave been loaded"
+        history = ""
+        for x in self.history_of_loads:
+            history += f'{x[1].name},{x[0].get_name()}\n'
+        return history
+
+    def get_working_package_as_string(self):
+        if self.current_file_transferred is None:
+            return f'No file loading \n' \
+                   f'Progress: 0%'
+        return f'{self.current_file_transferred[1].name},{self.current_file_transferred[0].get_name()}\n' \
+               f'Progress: {self.current_file_transferred[0].get_progress_as_string()}'
+
+
+class ThreadManager:
+    def __init__(self, number_of_threads, view_manager):
+        self.no_threads = 0
+        self.threads = []
+        self.view_manager = view_manager
+        for _ in range(number_of_threads):
+            self.add_thread()
+
+    def add_thread(self):
+        if len(self.threads) >= 8:
+            print("Maximum number of threads")
+            return
+        self.threads.append(Thread(self.no_threads))
+        self.no_threads += 1
+        return

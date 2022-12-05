@@ -9,10 +9,11 @@ class Package:
     """
     Logical representation of data package
     """
-    def __init__(self, size, name):
-        self.name: str = name
+    def __init__(self, size, no):
+        self.name: str = f'#{no}'
+        self.no = no
         self.size: int = size
-        self.curr_sire: int = size
+        self.curr_size: int = size
 
     def get_size_as_string(self, my_format: str = 'kB') -> str:
         """
@@ -21,15 +22,21 @@ class Package:
         :return: str
         """
         if my_format == 'B':
-            return f'{self.curr_sire}B'
+            return f'{self.size}B'
         if my_format == 'kB':
-            return f'{float(self.curr_sire)/1024}kB'
+            return f'{round(float(self.size)/1024, 2)}kB'
         if my_format == 'MB':
-            return f'{float(self.curr_sire)/1048576}MB'
+            return f'{round(float(self.size)/1048576, 2)}MB'
         return 'bad format'
 
+    def get_name(self, my_format: str = 'kB'):
+        return f'{self.name},{self.get_size_as_string(my_format)}'
 
-class PackageGenerator:
+    def get_progress_as_string(self):
+        return f'{round((float(self.size) / self.curr_size)* 100 ,1)}%'
+
+
+class PackageManager:
     """
     Class responsible for generating packages
     """
@@ -49,8 +56,8 @@ class PackageGenerator:
         package_list = []
         for pkg_num, size in zip_longest(range(number_of_packages), sizes):
             if size:
-                package_list.append(Package(f'Package #{pkg_num}', size))
+                package_list.append(Package(pkg_num, size))
             else:
-                package_list.append(Package(f'Package #{pkg_num}',
+                package_list.append(Package(pkg_num,
                                             randint(sizes_ranges[0], sizes_ranges[1])))
         return package_list
