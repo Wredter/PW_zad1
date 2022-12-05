@@ -12,6 +12,7 @@ class Package:
     def __init__(self, size, name):
         self.name: str = name
         self.size: int = size
+        self.curr_sire: int = size
 
     def get_size_as_string(self, my_format: str = 'kB') -> str:
         """
@@ -20,11 +21,11 @@ class Package:
         :return: str
         """
         if my_format == 'B':
-            return f'{self.size}B'
+            return f'{self.curr_sire}B'
         if my_format == 'kB':
-            return f'{float(self.size)/1024}kB'
+            return f'{float(self.curr_sire)/1024}kB'
         if my_format == 'MB':
-            return f'{float(self.size)/1048576}MB'
+            return f'{float(self.curr_sire)/1048576}MB'
         return 'bad format'
 
 
