@@ -56,8 +56,8 @@ class PackageManager:
         package_list = []
         for pkg_num, size in zip_longest(range(number_of_packages), sizes):
             if size:
-                package_list.append(Package(pkg_num, size))
+                package_list.append(Package(size, pkg_num))
             else:
-                package_list.append(Package(pkg_num,
-                                            randint(sizes_ranges[0], sizes_ranges[1])))
+                package_list.append(Package(randint(sizes_ranges[0], sizes_ranges[1]),
+                                            pkg_num))
         return package_list

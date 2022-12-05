@@ -1,3 +1,4 @@
+import copy
 from models.Customer import Customer
 from models.package import Package
 
@@ -41,11 +42,18 @@ class Thread:
         return f'{self.current_file_transferred[1].name},{self.current_file_transferred[0].get_name()}\n' \
                f'Progress: {self.current_file_transferred[0].get_progress_as_string()}'
 
+    def update(self, time):
+        uploaded = round(self.transfer_speed * (time / 1000), 0)
+        #TODO : add update function
+
+
 
 class ThreadManager:
     def __init__(self, number_of_threads, view_manager):
         self.no_threads = 0
         self.threads = []
+        self.free_threads = copy.copy(self.threads)
+        self.used_threads = []
         self.view_manager = view_manager
         for _ in range(number_of_threads):
             self.add_thread()
@@ -57,3 +65,20 @@ class ThreadManager:
         self.threads.append(Thread(self.no_threads))
         self.no_threads += 1
         return
+
+    def get_uploading_customers(self):
+        customers = []
+        for thread in self.threads:
+            customers.append(thread.current_file_transferred[1])
+        return customers
+
+    def get_free_threads(self):
+        free = []
+        for thread in self.threads:
+            if not thread.current_file_transferred:
+                free.append(thread)
+
+    def update(self, time):
+        for thread in self.used_threads:
+            # TODO: add update function
+            pass

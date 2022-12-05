@@ -26,9 +26,9 @@ class ThreadViewer:
         else:
             canvas.create_rectangle(x, y, x+self.thread_width, y + self.thread_width, outline='#00FF10')
         canvas.create_text(x + (self.thread_width / 2), y, text=thread.name, fill='#FFFFFF', font='Helvetica 12 bold')
-        canvas.create_text(x + 80, y + 42, text=f'Loaded:\n'
+        canvas.create_text(x + 10, y + 10, text=f'Loaded:\n'
                                            f'{thread.get_thread_history_as_string()}',
-                           fill='#FFFFFF', font='Helvetica 8 bold')
-        canvas.create_text((self.thread_width / 2) + x + 50, y + 42, text="Loading: \n"
+                           fill='#FFFFFF', font='Helvetica 8 bold', anchor='nw')
+        canvas.create_text((self.thread_width / 2) + x + 10, y + 10, text="Loading: \n"
                                                                  f"{thread.get_working_package_as_string()}",
-                           fill='#FFFFFF', font='Helvetica 8 bold')
+                           fill='#FFFFFF', font='Helvetica 8 bold', anchor='nw')
