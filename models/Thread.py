@@ -1,9 +1,11 @@
+import time
+
 from models.Customer import Customer
 from models.package import Package
 
 
 class Thread:
-    def __init__(self, no: int, transfer_speed: int = 1024):
+    def __init__(self, no: int, transfer_speed: int = 1024*10):
         self.name = f'#{no}'
         self.no = no
         self.transfer_speed: int = transfer_speed
@@ -13,8 +15,9 @@ class Thread:
 
     def auction(self, customer_list: list[Customer]) -> bool:
         if customer_list:
-            customer_list.sort(key=lambda x: x.calc_weight(), reverse=True)
+            customer_list.sort(key=lambda x: x.calc_weight())
             self.current_file_transferred = (customer_list[0].get_package(), customer_list[0])
+            customer_list[0].time_created = time.time()
             for customer in customer_list:
                 customer.is_taking_part_in_auction = not customer.is_taking_part_in_auction
             return True

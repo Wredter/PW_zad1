@@ -27,8 +27,11 @@ class CustomerViewer:
         if customer in uc:
             canvas.create_rectangle(x, y, x + self.customer_width - 5, y + self.customer_height - 5, outline='#00FF10')
         else:
-            canvas.create_rectangle(x, y, x + self.customer_width -5, y + self.customer_height - 5, outline='#FFFF00')
+            canvas.create_rectangle(x, y, x + self.customer_width - 5, y + self.customer_height - 5, outline='#FFFF00')
         canvas.create_text(x + (self.customer_width / 2), y, text=customer.name, fill='#FFFFFF', font='Helvetica 12 bold')
         canvas.create_text(x + 10, y + 10, text=f'Packages:\n'
                                            f'{customer.get_packages_as_string()}',
                            fill='#FFFFFF', font='Helvetica 8 bold', anchor='nw')
+        canvas.create_text(x + (self.customer_width / 2), y - 20 + self.customer_height, text=f'Done: '
+                                                f'{(round(100 - ((len(customer.packages)/customer.number_of_packages) * 100), 1))}%',
+                           fill='#FFFFFF', font='Helvetica 8 bold')

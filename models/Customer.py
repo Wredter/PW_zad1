@@ -22,7 +22,7 @@ class Customer:
         return self.packages.pop(0)
 
     def get_time_in_que(self):
-        return self.time_created-time.time()
+        return time.time() - self.time_created
 
     def get_packages_as_string(self):
         packages = ''
@@ -31,7 +31,8 @@ class Customer:
         return packages
 
     def calc_weight(self):
-        return self.packages[0].size * (len(self.packages)/self.number_of_packages) * (1 / self.get_time_in_que())
+        #print(f'c: {self.name}, w: {self.packages[0].size * (len(self.packages)/self.number_of_packages) * (1 / 1 + self.get_time_in_que())}, p: {len(self.packages)/self.number_of_packages}, t: {1 / (1 + self.get_time_in_que())}')
+        return self.packages[0].size * (len(self.packages)/self.number_of_packages) * (1 / (1 + self.get_time_in_que()))
 
 
 class CustomerManager:
