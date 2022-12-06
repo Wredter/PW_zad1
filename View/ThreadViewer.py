@@ -22,9 +22,9 @@ class ThreadViewer:
 
     def __draw_thread(self, canvas: Canvas, x: int, y: int, thread: Thread):
         if thread.current_file_transferred is None:
-            canvas.create_rectangle(x, y, x + self.thread_width, y + self.thread_width, outline='#FF0010')
+            canvas.create_rectangle(x+5, y + 5, x + self.thread_width - 5, y + self.thread_width - 5, outline='#FF0010')
         else:
-            canvas.create_rectangle(x, y, x+self.thread_width, y + self.thread_width, outline='#00FF10')
+            canvas.create_rectangle(x+5, y + 5, x + self.thread_width - 5, y + self.thread_width - 5, outline='#00FF10')
         canvas.create_text(x + (self.thread_width / 2), y, text=thread.name, fill='#FFFFFF', font='Helvetica 12 bold')
         canvas.create_text(x + 10, y + 10, text=f'Loaded:\n'
                                            f'{thread.get_thread_history_as_string()}',

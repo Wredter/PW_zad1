@@ -19,13 +19,13 @@ class ViewManager:
         self.canvas.grid(column=0, row=0, rowspan=3)
 
         #Customer Manager
-        self.customer_manager = CustomerManager(6, self)
+        self.customer_manager = CustomerManager(1, self)
         self.customer_viewer = CustomerViewer(self)
         self.add_customer = Button(self.root, text="Add Customer", command=self.customer_manager.add_customer, padx=50, pady=50)
         self.add_customer.grid(column=1, row=0, sticky='ew')
 
         #Thread Manager
-        self.thread_manager = ThreadManager(4, self)
+        self.thread_manager = ThreadManager(4, self.customer_manager)
         self.thread_viewer = ThreadViewer(self)
         self.add_thread = Button(self.root, text="Add Thread", command=self.thread_manager.add_thread, padx=50, pady=50)
         self.add_thread.grid(column=1, row=1, sticky='ew')

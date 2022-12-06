@@ -30,10 +30,17 @@ class Package:
         return 'bad format'
 
     def get_name(self, my_format: str = 'kB'):
-        return f'{self.name},{self.get_size_as_string(my_format)}'
+        return f'{self.name}, s:{self.get_size_as_string(my_format)}'
 
     def get_progress_as_string(self):
-        return f'{round((float(self.size) / self.curr_size)* 100 ,1)}%'
+        return f'{round(100 - ((float(self.curr_size) / self.size) * 100) ,1)}%'
+
+    def upload(self, b_uploaded: int) -> bool:
+        self.curr_size -= b_uploaded
+        if self.curr_size < 0:
+            return True
+        else:
+            return False
 
 
 class PackageManager:
