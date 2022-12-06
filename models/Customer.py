@@ -1,7 +1,7 @@
 import random
+import time
 
 from models.package import PackageManager, Package
-import time
 
 
 class Customer:
